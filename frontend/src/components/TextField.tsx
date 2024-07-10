@@ -6,7 +6,7 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const TextField: React.FC<TextFieldProps> = ({ label, ...props }) => {
   return (
-    <label className="form-control w-full max-w-md">
+    <label className={"form-control w-full max-w-md "}>
       <div className="label">
         <span className="label-text text-md">{label}</span>
       </div>

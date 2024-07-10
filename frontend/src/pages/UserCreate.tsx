@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-const UserEdit = () => {
+const UserCreate = () => {
   const { id } = useParams();
   return (
     <div>
@@ -9,4 +9,4 @@ const UserEdit = () => {
   );
 };
 
-export default UserEdit;
+export default UserCreate;

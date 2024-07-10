@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import UserList from "./pages/UserList/UserList";
-import UserEdit from "./pages/UserEdit";
+import UserCreate from "./pages/UserCreate";
 
 const App = () => {
   return (
@@ -10,7 +10,7 @@ const App = () => {
         <Routes>
           <Route path="*" element={<LoginPage />} />
           <Route path="/list" element={<UserList />} />
-          <Route path="/edit/:id" element={<UserEdit />} />
+          <Route path="/createUser" element={<UserCreate />} />
         </Routes>
       </div>
     </Router>

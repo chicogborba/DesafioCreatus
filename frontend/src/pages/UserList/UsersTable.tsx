@@ -4,9 +4,10 @@ import { User } from "./UserList";
 
 export interface UsersTablePRops {
   data: User[];
+  onUserEdit: (user: User) => void;
 }
 
-const UsersTable: React.FC<UsersTablePRops> = ({ data }) => {
+const UsersTable: React.FC<UsersTablePRops> = ({ data, onUserEdit }) => {
   return (
     <>
       <div className="sticky top-0 text-center flex justify-between items-center py-2 px-10 bg-gray-100 border-y border-gray-200">
@@ -37,7 +38,10 @@ const UsersTable: React.FC<UsersTablePRops> = ({ data }) => {
             {user.level}
           </h1>
           <span className="flex">
-            <MdOutlineModeEdit className="text-primary text-2xl mx-2" />
+            <MdOutlineModeEdit
+              onClick={() => onUserEdit(user)}
+              className="text-primary text-2xl mx-2 hover:cursor-pointer"
+            />
             <FiTrash2 className="text-red-500 text-2xl mx-2" />
           </span>
         </div>

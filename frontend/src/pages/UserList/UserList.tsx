@@ -1,6 +1,8 @@
 import UsersTable from "./UsersTable";
 import CreateUserModal from "./CreateUserModal";
 import { useState } from "react";
+import Sidebar from "../../components/Sidebar";
+import { GrDocumentPdf } from "react-icons/gr";
 
 export interface User {
   id: string | number;
@@ -104,23 +106,29 @@ const data: User[] = [
 const UserList = () => {
   const [isCreateUserModalOpen, setIsCreateUserModalOpen] = useState(false);
   return (
-    <div className="bg-base-200 h-screen w-full flex items-center content-center py-16 px-32">
-      <div className="bg-base-100 overflow-auto shadow-xl w-full h-full rounded-xl flex flex-col">
-        <div className="flex justify-between items-center my-7 mx-10">
-          <h1 className="font-semibold text-2xl ">Usuários</h1>
-          <button
-            onClick={() => setIsCreateUserModalOpen(true)}
-            className="btn btn-sm btn-primary text-white rounded-full "
-          >
-            Adicionar Usuário
-          </button>
+    <div className="flex flex-row h-screen">
+      <Sidebar selected="list" />
+      <div className="bg-base-200 h-screen w-full flex items-center content-center py-16 px-32">
+        <div className="bg-base-100 overflow-auto shadow-xl w-full h-full rounded-xl flex flex-col">
+          <div className="flex justify-between items-center my-7 mx-10">
+            <h1 className="font-semibold text-2xl ">Usuários</h1>
+            <div className="flex gap-4">
+              <GrDocumentPdf className="text-primary w-7 h-7 hover:opacity-70 hover:cursor-pointer" />
+              <button className="btn btn-sm btn-primary text-white rounded-full ">
+                Adicionar Usuário
+              </button>
+            </div>
+          </div>
+          <UsersTable
+            data={data}
+            onUserEdit={() => setIsCreateUserModalOpen(true)}
+          />
         </div>
-        <UsersTable data={data} />
+        <CreateUserModal
+          isOpen={isCreateUserModalOpen}
+          onClose={() => setIsCreateUserModalOpen(false)}
+        />
       </div>
-      <CreateUserModal
-        isOpen={isCreateUserModalOpen}
-        onClose={() => setIsCreateUserModalOpen(false)}
-      />
     </div>
   );
 };
