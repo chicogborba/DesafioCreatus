@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import UserList from "./pages/UserList";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import UserList from "./pages/UserList/UserList";
 import UserEdit from "./pages/UserEdit";
 
 const App = () => {
