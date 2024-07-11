@@ -5,6 +5,7 @@ import { MdQrCodeScanner } from "react-icons/md";
 
 import { useNavigate } from "react-router-dom";
 import { DiMagento } from "react-icons/di";
+import useAuth from "../hooks/useAuth";
 
 export interface SidebarProps {
   selected?: "list" | "feedbackByPlace" | "";
@@ -12,13 +13,15 @@ export interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ selected }) => {
   const nav = useNavigate();
+  const { logout } = useAuth();
 
   const handleClick = (route: string) => {
     nav(route, { replace: true });
   };
 
-  const handleLogout = () => {
-    nav("/", { replace: true });
+  const handleLogout = async () => {
+    await logout();
+    window.location.reload();
   };
 
   return (

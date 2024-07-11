@@ -3,8 +3,25 @@ import WaveBackground from "./WaveBackground";
 import TextFields from "./TextFields";
 import { DiMagento } from "react-icons/di";
 import { useNavigate } from "react-router-dom";
-const LoginPage = () => {
+import useAPI from "../../hooks/useAPI";
+
+export interface LoginPageProps {
+  login: (token: string) => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ login }) => {
   const nav = useNavigate();
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const { postLogin } = useAPI();
+
+  const handleLogin = async () => {
+    const data = await postLogin({ email, password });
+    if (!data) return;
+    login(data.token);
+    nav("/list");
+  };
 
   return (
     <div className="flex lg:justify-end justify-center items-center w-screen h-screen bg-[linear-gradient(178.05deg,#065D2F_1.65%,#DBEDD6_75.83%)] relative overflow-hidden">
@@ -14,9 +31,14 @@ const LoginPage = () => {
       >
         <DiMagento className=" w-full h-full max-w-64 max-h-64 ml-auto mr-auto fill-primary" />
         <h1 className="font-semibold text-4xl mb-8  text-primary">SafeCo™</h1>
-        <TextFields />
+        <TextFields
+          email={email}
+          password={password}
+          onChangeEmail={setEmail}
+          onChangePassword={setPassword}
+        />
         <button
-          onClick={() => nav("/list")}
+          onClick={handleLogin}
           className="btn btn-primary w-full max-w-md mt-12"
         >
           Login
