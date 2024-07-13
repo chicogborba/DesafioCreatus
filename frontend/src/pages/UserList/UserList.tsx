@@ -1,15 +1,23 @@
 import UsersTable from "./UsersTable";
-import CreateUserModal from "./CreateUserModal";
+import EditUserModal from "./EditUserModal/EditUserModal";
 import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { GrDocumentPdf } from "react-icons/gr";
+import CreateUserModal from "./CreateUserModal/CreateUserModal";
 
-export interface User {
+export type User = {
   id: string | number;
   email: string;
   name: string;
-  level: 1 | 2 | 3 | 4 | 5;
-}
+  level: number;
+};
+
+export type NewUser = {
+  email: string;
+  name: string;
+  level: number;
+  password: string;
+};
 
 const data: User[] = [
   {
@@ -104,7 +112,23 @@ const data: User[] = [
   },
 ];
 const UserList = () => {
+  const [EditUserModalData, setEditUserModalData] = useState<User | null>(null);
   const [isCreateUserModalOpen, setIsCreateUserModalOpen] = useState(false);
+
+  const handleEditUser = (user: User) => {
+    setEditUserModalData(user);
+  };
+
+  const handleSaveEditUser = (user: User) => {
+    alert(user.toString());
+    console.log(user);
+  };
+
+  const handleCreateUser = (user: NewUser) => {
+    alert(user.toString());
+    console.log(user);
+  };
+
   return (
     <div className="flex flex-row h-screen">
       <Sidebar selected="list" />
@@ -114,19 +138,25 @@ const UserList = () => {
             <h1 className="font-semibold text-2xl ">Usuários</h1>
             <div className="flex gap-4">
               <GrDocumentPdf className="text-primary w-7 h-7 hover:opacity-70 hover:cursor-pointer" />
-              <button className="btn btn-sm btn-primary text-white rounded-full ">
+              <button
+                onClick={() => setIsCreateUserModalOpen(true)}
+                className="btn btn-sm btn-primary text-white rounded-full "
+              >
                 Adicionar Usuário
               </button>
             </div>
           </div>
-          <UsersTable
-            data={data}
-            onUserEdit={() => setIsCreateUserModalOpen(true)}
-          />
+          <UsersTable data={data} onUserEdit={handleEditUser} />
         </div>
+        <EditUserModal
+          onUserSave={handleSaveEditUser}
+          userData={EditUserModalData}
+          onClose={() => setEditUserModalData(null)}
+        />
         <CreateUserModal
           isOpen={isCreateUserModalOpen}
           onClose={() => setIsCreateUserModalOpen(false)}
+          onCreateUser={handleCreateUser}
         />
       </div>
     </div>
