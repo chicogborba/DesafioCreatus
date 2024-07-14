@@ -1,9 +1,10 @@
 import UsersTable from "./UsersTable";
 import EditUserModal from "./EditUserModal/EditUserModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { GrDocumentPdf } from "react-icons/gr";
 import CreateUserModal from "./CreateUserModal/CreateUserModal";
+import useAPI from "../../hooks/useAPI";
 
 export type User = {
   id: string | number;
@@ -12,121 +13,64 @@ export type User = {
   level: number;
 };
 
-export type NewUser = {
-  email: string;
-  name: string;
-  level: number;
-  password: string;
-};
+export type NewUser = Omit<User, "id">;
 
-const data: User[] = [
-  {
-    id: 1,
-    name: "Ricardo Oliveira Lima",
-    email: "joao@gmail.com",
-    level: 1,
-  },
-  {
-    id: 2,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 2,
-  },
-  {
-    id: 3,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 3,
-  },
-  {
-    id: 4,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 4,
-  },
-  {
-    id: 5,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 2,
-  },
-  {
-    id: 6,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 3,
-  },
-  {
-    id: 7,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 2,
-  },
-  {
-    id: 8,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 3,
-  },
-  {
-    id: 9,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 1,
-  },
-  {
-    id: 10,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 4,
-  },
-  {
-    id: 11,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 1,
-  },
-  {
-    id: 12,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 1,
-  },
-  {
-    id: 13,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 1,
-  },
-  {
-    id: 14,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 4,
-  },
-  {
-    id: 15,
-    name: "Maria",
-    email: "maria@gmail.com",
-    level: 5,
-  },
-];
 const UserList = () => {
+  const { getUsers, createUser, editUser, deleteUser, getUsersPDF } = useAPI();
+
+  const [apiData, setApiData] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
   const [EditUserModalData, setEditUserModalData] = useState<User | null>(null);
   const [isCreateUserModalOpen, setIsCreateUserModalOpen] = useState(false);
 
-  const handleEditUser = (user: User) => {
-    setEditUserModalData(user);
-  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-  const handleSaveEditUser = (user: User) => {
-    alert(user.toString());
-    console.log(user);
+  const fetchUsers = () => {
+    getUsers().then((data) => {
+      if (data) {
+        setApiData(data);
+        setLoading(false);
+      }
+    });
   };
 
   const handleCreateUser = (user: NewUser) => {
-    alert(user.toString());
-    console.log(user);
+    createUser(user).then((newUser) => {
+      if (newUser) {
+        setApiData((prevData) => [...prevData, newUser]);
+      }
+    });
+  };
+
+  const handleSaveEditUser = (user: User) => {
+    editUser(user).then((updatedUser) => {
+      if (updatedUser) {
+        setApiData((prevData) => {
+          const index = prevData.findIndex((u) => u.id === updatedUser.id);
+          return [
+            ...prevData.slice(0, index),
+            updatedUser,
+            ...prevData.slice(index + 1),
+          ];
+        });
+      }
+    });
+  };
+
+  const handleDeleteUser = (id: string | number) => {
+    deleteUser(id).then((success) => {
+      if (success) {
+        setApiData((prevData) => {
+          return prevData.filter((u) => u.id !== id);
+        });
+      }
+    });
+  };
+
+  const handleEditUser = (user: User) => {
+    setEditUserModalData(user);
   };
 
   return (
@@ -137,7 +81,10 @@ const UserList = () => {
           <div className="flex justify-between items-center my-7 mx-10">
             <h1 className="font-semibold text-2xl ">Usuários</h1>
             <div className="flex gap-4">
-              <GrDocumentPdf className="text-primary w-7 h-7 hover:opacity-70 hover:cursor-pointer" />
+              <GrDocumentPdf
+                onClick={getUsersPDF}
+                className="text-primary w-7 h-7 hover:opacity-70 hover:cursor-pointer"
+              />
               <button
                 onClick={() => setIsCreateUserModalOpen(true)}
                 className="btn btn-sm btn-primary text-white rounded-full "
@@ -146,7 +93,15 @@ const UserList = () => {
               </button>
             </div>
           </div>
-          <UsersTable data={data} onUserEdit={handleEditUser} />
+          {loading ? (
+            <p>Carregando...</p>
+          ) : (
+            <UsersTable
+              onUserDelete={handleDeleteUser}
+              data={apiData}
+              onUserEdit={handleEditUser}
+            />
+          )}
         </div>
         <EditUserModal
           onUserSave={handleSaveEditUser}

@@ -89,3 +89,18 @@ export const editUser = async (req: Request, res: Response) => {
   }
 }
 
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.user.delete({ where: { id } });
+    res.json({ message: 'Usuário deletado com sucesso.' });
+  } catch (error) {
+    console.error('Erro ao deletar usuário:', error);
+    res.status(500).json({ error: 'Erro ao deletar usuário.' });
+  }
+}
+
+
+

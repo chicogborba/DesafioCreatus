@@ -5,9 +5,14 @@ import { User } from "./UserList";
 export interface UsersTablePRops {
   data: User[];
   onUserEdit: (user: User) => void;
+  onUserDelete: (id: string | number) => void;
 }
 
-const UsersTable: React.FC<UsersTablePRops> = ({ data, onUserEdit }) => {
+const UsersTable: React.FC<UsersTablePRops> = ({
+  data,
+  onUserEdit,
+  onUserDelete,
+}) => {
   return (
     <>
       <div className="sticky top-0 text-center flex justify-between items-center py-2 px-10 bg-gray-100 border-y border-gray-200">
@@ -42,7 +47,10 @@ const UsersTable: React.FC<UsersTablePRops> = ({ data, onUserEdit }) => {
               onClick={() => onUserEdit(user)}
               className="text-primary text-2xl mx-2 hover:cursor-pointer"
             />
-            <FiTrash2 className="text-red-500 text-2xl mx-2" />
+            <FiTrash2
+              onClick={() => onUserDelete(user.id)}
+              className="text-red-500 text-2xl mx-2 hover:cursor-pointer"
+            />
           </span>
         </div>
       ))}
