@@ -1,9 +1,10 @@
 import { FiTrash2 } from "react-icons/fi";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { User } from "./UserList";
+import { User, UserWithBadge } from "./UserList";
+import { FaIdCard } from "react-icons/fa";
 
 export interface UsersTablePRops {
-  data: User[];
+  data: UserWithBadge[];
   onUserEdit: (user: User) => void;
   onUserDelete: (id: string | number) => void;
 }
@@ -13,6 +14,10 @@ const UsersTable: React.FC<UsersTablePRops> = ({
   onUserEdit,
   onUserDelete,
 }) => {
+  const handleBadgeClick = (url: string) => {
+    console.log(url);
+    window.open(url, "_blank");
+  };
   return (
     <>
       <div className="sticky top-0 text-center flex justify-between items-center py-2 px-10 bg-gray-100 border-y border-gray-200">
@@ -43,6 +48,10 @@ const UsersTable: React.FC<UsersTablePRops> = ({
             {user.level}
           </h1>
           <span className="flex">
+            <FaIdCard
+              className="text-primary text-2xl mx-2 hover:cursor-pointer"
+              onClick={() => handleBadgeClick(user.badge_url)}
+            />
             <MdOutlineModeEdit
               onClick={() => onUserEdit(user)}
               className="text-primary text-2xl mx-2 hover:cursor-pointer"

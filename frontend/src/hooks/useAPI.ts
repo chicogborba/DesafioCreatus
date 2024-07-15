@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LoginRequestBody } from "./types";
 import { NewUser, User } from "../pages/UserList/UserList";
 
-const BASE_URL = "http://localhost:3000"; // Altere conforme o seu ambiente de desenvolvimento
+const BASE_URL = "http://localhost:3000";
 
 const useAPI = () => {
   const [error, setError] = useState<string | null>(null);
@@ -166,6 +166,25 @@ const useAPI = () => {
     }
   };
 
+  const getBadgeByUserId = async (id: string) => {
+    setError(null);
+
+    try {
+      const response = await fetch(`${BASE_URL}/badge/${id}`);
+
+      if (!response.ok) {
+        throw new Error("Erro ao buscar badge");
+      }
+
+      const data = await response.json();
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setError(error.message);
+      return null;
+    }
+  };
+
   return {
     postLogin,
     error,
@@ -174,6 +193,7 @@ const useAPI = () => {
     editUser,
     deleteUser,
     getUsersPDF,
+    getBadgeByUserId,
   };
 };
 

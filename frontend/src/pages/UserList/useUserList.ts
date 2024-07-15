@@ -1,30 +1,39 @@
 import { useState } from "react";
-import { NewUser, User } from "./UserList";
+import { NewUser, User, UserWithBadge } from "./UserList";
 import useAPI from "../../hooks/useAPI";
 
 const useUserList = () => {
-  const { getUsers, createUser, editUser, deleteUser } = useAPI();
+  const { getUsers, createUser, editUser, deleteUser, getBadgeByUserId } =
+    useAPI();
 
-  const [apiData, setApiData] = useState<User[]>([]);
+  const [apiData, setApiData] = useState<UserWithBadge[]>([]);
   const [loading, setLoading] = useState(true);
   const [EditUserModalData, setEditUserModalData] = useState<User | null>(null);
   const [isCreateUserModalOpen, setIsCreateUserModalOpen] = useState(false);
 
-  const fetchUsers = () => {
-    getUsers().then((data) => {
-      if (data) {
-        setApiData(data);
-        setLoading(false);
-      }
-    });
+  const fetchUsers = async () => {
+    const users = await getUsers();
+    if (users) {
+      const usersWithBadge = await Promise.all(
+        users.map(async (user: User) => {
+          const badge = await getBadgeByUserId(user.id);
+          return { ...user, badge_url: badge.badge_url };
+        }),
+      );
+      setApiData(usersWithBadge);
+      setLoading(false);
+    }
   };
 
-  const handleCreateUser = (user: NewUser) => {
-    createUser(user).then((newUser) => {
-      if (newUser) {
-        setApiData((prevData) => [...prevData, newUser]);
-      }
-    });
+  const handleCreateUser = async (user: NewUser) => {
+    const newUser = await createUser(user);
+    if (newUser) {
+      const badge = await getBadgeByUserId(newUser.id);
+      setApiData((prevData) => [
+        ...prevData,
+        { ...newUser, badge_url: badge.badge_url },
+      ]);
+    }
   };
 
   const handleSaveEditUser = (user: User) => {

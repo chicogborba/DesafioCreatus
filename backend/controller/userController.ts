@@ -110,5 +110,19 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 }
 
+export const getBadgeByUserId = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const badge = await prisma.badge.findFirst({ where: { user_id: id } });
+    if (!badge) {
+      return res.status(404).json({ message: 'Badge não encontrada.' });
+    }
+    res.json(badge);
+  } catch (error) {
+    console.error('Erro ao buscar badge:', error);
+    res.status(500).json({ error: 'Erro ao buscar badge.' });
+  }
+}
+
 
 

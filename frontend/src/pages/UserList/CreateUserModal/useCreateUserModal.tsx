@@ -59,6 +59,7 @@ const useCreateUserModal = (
 
   useEffect(() => {
     setFields(initialState);
+    setImageLink(null);
   }, [isOpen]);
 
   useEffect(() => {

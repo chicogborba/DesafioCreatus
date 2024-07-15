@@ -7,13 +7,15 @@ import PageWrapper from "../../components/PageWrapper";
 import useUserList from "./useUserList";
 import UserListHeader from "./UserListHeader";
 
-export type User = {
-  id: string | number;
+export interface User {
+  id: string;
   email: string;
   name: string;
   level: number;
   profile_img: string;
-};
+}
+
+export type UserWithBadge = User & { badge_url: string };
 
 export type NewUser = Omit<User, "id">;
 
