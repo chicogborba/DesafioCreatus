@@ -189,6 +189,25 @@ const useUserAPI = () => {
     }
   };
 
+  const getUserById = async (id: string) => {
+    setError(null);
+
+    try {
+      const response = await fetch(`${BASE_URL}/user/${id}`);
+
+      if (!response.ok) {
+        throw new Error("Erro ao buscar usuário");
+      }
+
+      const data = await response.json();
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setError(error.message);
+      return null;
+    }
+  };
+
   return {
     postLogin,
     error,
@@ -198,6 +217,7 @@ const useUserAPI = () => {
     deleteUser,
     getUsersPDF,
     getBadgeByUserId,
+    getUserById,
   };
 };
 

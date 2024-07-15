@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const BASE_URL = "http://localhost:3000"; // Altere conforme o seu ambiente de desenvolvimento
+const BASE_URL = "http://localhost:3000";
 
 const useAWSAPI = () => {
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +16,7 @@ const useAWSAPI = () => {
       }
 
       const data = await response.json();
-      return data; // Presumindo que `data` contenha o link seguro
+      return data;
     } catch (error) {
       setError("Não foi possivel fazer o upload da imagem");
       return null;

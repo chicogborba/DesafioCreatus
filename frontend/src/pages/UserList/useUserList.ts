@@ -17,7 +17,7 @@ const useUserList = () => {
       const usersWithBadge = await Promise.all(
         users.map(async (user: User) => {
           const badge = await getBadgeByUserId(user.id);
-          return { ...user, badge_url: badge.badge_url };
+          return { ...user, badge_url: badge?.badge_url };
         }),
       );
       setApiData(usersWithBadge);
@@ -31,7 +31,7 @@ const useUserList = () => {
       const badge = await getBadgeByUserId(newUser.id);
       setApiData((prevData) => [
         ...prevData,
-        { ...newUser, badge_url: badge.badge_url },
+        { ...newUser, badge_url: badge?.badge_url },
       ]);
     }
   };

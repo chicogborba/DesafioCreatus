@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import UserList from "./pages/UserList/UserList";
 import useAuth from "./hooks/useAuth";
 import PlaceList from "./pages/PlacesList/PlaceList";
+import AllowAcess from "./pages/AllowAcess/AllowAcess";
 
 const App = () => {
   const { isLoggedIn, login, setIsLoggedIn } = useAuth();
@@ -41,6 +42,11 @@ const App = () => {
             path="/place-list"
             element={isLoggedIn ? <PlaceList /> : <Navigate to="/" />}
           />
+          <Route
+            path="/allow-acess"
+            element={isLoggedIn ? <AllowAcess /> : <Navigate to="/" />}
+          />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </Router>

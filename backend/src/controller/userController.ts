@@ -124,5 +124,21 @@ export const getBadgeByUserId = async (req: Request, res: Response) => {
   }
 }
 
+export const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await prisma.user.findUnique({ where: { id: id } });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    res.status(500).json({ error: 'Erro ao buscar usuário.' });
+  }
+}
+
+
+
 
 

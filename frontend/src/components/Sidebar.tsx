@@ -6,6 +6,7 @@ import { DiMagento } from "react-icons/di";
 import useAuth from "../hooks/useAuth";
 import { FaBuildingLock } from "react-icons/fa6";
 import SidebarIcons from "./SidebarIcons";
+import { BiQrScan } from "react-icons/bi";
 
 /**
  * Sidebar for navigation in the application.
@@ -27,8 +28,10 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-20 h-screen bg-white shadow-2xl justify-between 
-    flex flex-col items-center py-8">
+    <div
+      className="w-20 h-screen bg-white shadow-2xl justify-between 
+    flex flex-col items-center py-8"
+    >
       <div className="flex flex-col gap-4 items-center">
         <DiMagento className="w-12 h-12 text-primary" />
         <div className="w-1/2 border-2 border-gray-100 my-2 rounded-full"></div>
@@ -41,6 +44,11 @@ const Sidebar = () => {
           isActive={location.pathname == "/place-list"}
           onClick={() => handleClick("/place-list")}
           Icon={FaBuildingLock}
+        />
+        <SidebarIcons
+          isActive={location.pathname == "/allow-acess"}
+          onClick={() => handleClick("/allow-acess")}
+          Icon={BiQrScan}
         />
       </div>
       <MdLogout
