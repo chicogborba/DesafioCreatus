@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { User } from "../UserList";
-import useGeneralFunctions from "../../../hooks/useGeneralFunctions";
-import useAWSAPI from "../../../hooks/useAWSAPI";
-import useImage from "../../../hooks/useImage";
+import { User } from "../../UserList";
+import useGeneralFunctions from "../../../../hooks/useGeneralFunctions";
+import useAWSAPI from "../../../../hooks/useAWSAPI";
+import useImage from "../../../../hooks/useImage";
 
 export type Field = {
   label: string;

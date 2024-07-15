@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { LoginRequestBody } from "./types";
 import { NewUser, User } from "../pages/UserList/UserList";
+
+export interface LoginRequestBody {
+  email: string;
+  password: string;
+}
 
 const BASE_URL = "http://localhost:3000";
 
-const useAPI = () => {
+const useUserAPI = () => {
   const [error, setError] = useState<string | null>(null);
 
   const postLogin = async (body: LoginRequestBody) => {
@@ -197,4 +201,4 @@ const useAPI = () => {
   };
 };
 
-export default useAPI;
+export default useUserAPI;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { NewUser } from "../UserList";
-import useGeneralFunctions from "../../../hooks/useGeneralFunctions";
-import useAWSAPI from "../../../hooks/useAWSAPI";
-import useImage from "../../../hooks/useImage";
+import { NewUser } from "../../UserList";
+import useGeneralFunctions from "../../../../hooks/useGeneralFunctions";
+import useAWSAPI from "../../../../hooks/useAWSAPI";
+import useImage from "../../../../hooks/useImage";
 
 const useCreateUserModal = (
   onClose: () => void,

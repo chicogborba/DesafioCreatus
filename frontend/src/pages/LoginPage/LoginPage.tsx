@@ -1,9 +1,9 @@
 import React from "react";
-import WaveBackground from "./WaveBackground";
-import TextFields from "./TextFields";
+import WaveBackground from "./components/WaveBackground";
 import { DiMagento } from "react-icons/di";
 import { useNavigate } from "react-router-dom";
-import useAPI from "../../hooks/useAPI";
+import useUserAPI from "../../hooks/useUserAPI";
+import TextFields from "./components/TextFields";
 
 export interface LoginPageProps {
   login: (token: string) => void;
@@ -14,7 +14,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ login }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const { postLogin } = useAPI();
+  const { postLogin } = useUserAPI();
 
   const handleLogin = async () => {
     const data = await postLogin({ email, password });

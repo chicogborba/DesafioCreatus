@@ -7,6 +7,14 @@ export interface SelectProfileImageProps {
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+/**
+ * Component used to select a profile image using
+ * a file input and a button to open the file input.
+ * it displays an existing image if there is one,
+ * otherwise it displays a default image.
+ * @param imageLink
+ * @param handleFileChange
+ */
 const SelectProfileImage: React.FC<SelectProfileImageProps> = ({
   imageLink,
   handleFileChange,
@@ -33,7 +41,10 @@ const SelectProfileImage: React.FC<SelectProfileImageProps> = ({
         className="btn btn-sm max-w-48 w-full"
       >
         Escolher Foto
-        <MdOutlinePhotoCamera className="max-w-5 max-h-5 w-full h-full" />
+        <MdOutlinePhotoCamera
+          className="max-w-5 max-h-5
+         w-full h-full"
+        />
       </button>
       <input
         type="file"

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { NewUser, User, UserWithBadge } from "./UserList";
-import useAPI from "../../hooks/useAPI";
+import useUserAPI from "../../hooks/useUserAPI";
 
 const useUserList = () => {
   const { getUsers, createUser, editUser, deleteUser, getBadgeByUserId } =
-    useAPI();
+    useUserAPI();
 
   const [apiData, setApiData] = useState<UserWithBadge[]>([]);
   const [loading, setLoading] = useState(true);

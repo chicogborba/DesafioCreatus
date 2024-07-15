@@ -1,5 +1,5 @@
-import bigWave from "../../assets/BigWave.png";
-import smallWave from "../../assets/smallWave.png";
+import bigWave from "../../../assets/BigWave.png";
+import smallWave from "../../../assets/smallWave.png";
 
 const WaveBackground = () => {
   return (

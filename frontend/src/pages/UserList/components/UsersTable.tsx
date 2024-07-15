@@ -1,6 +1,6 @@
 import { FiTrash2 } from "react-icons/fi";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { User, UserWithBadge } from "./UserList";
+import { User, UserWithBadge } from "../UserList";
 import { FaIdCard } from "react-icons/fa";
 
 export interface UsersTablePRops {

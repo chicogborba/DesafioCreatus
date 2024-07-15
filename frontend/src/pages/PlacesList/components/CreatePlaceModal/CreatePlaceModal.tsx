@@ -1,36 +1,28 @@
-import Modal from "../../../components/Modal";
-import { NewUser } from "../UserList";
-import useCreateUserModal from "./useCreateUserModal";
-import SelectProfileImage from "../../../components/SelectProfileImage";
+import Modal from "../../../../components/Modal";
+import { PlaceNoId } from "../../../../hooks/usePlaceAPI";
+import useCreatePlaceModal from "./useCreatePlaceModal";
 
-export interface CreateUserModalProps {
+export interface CreatePlaceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreateUser: (user: NewUser) => void;
+  onCreatePlace: (user: PlaceNoId) => void;
 }
 
-const CreateUserModal = ({
+const CreatePlaceModal = ({
   isOpen,
   onClose,
-  onCreateUser,
-}: CreateUserModalProps) => {
-  const {
-    fields,
-    handleChange,
-    handleSave,
-    isValidCreateUser,
-    handleFileChange,
-    imageLink,
-  } = useCreateUserModal(onClose, onCreateUser, isOpen);
+  onCreatePlace,
+}: CreatePlaceModalProps) => {
+  const { fields, handleChange, handleSave } = useCreatePlaceModal(
+    onClose,
+    onCreatePlace,
+    isOpen,
+  );
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-full text-left flex flex-col gap-4">
-        <h3 className="font-medium text-2xl">Criar Usuario</h3>
-        <SelectProfileImage
-          imageLink={imageLink}
-          handleFileChange={handleFileChange}
-        />
+        <h3 className="font-medium text-2xl">Criar Local</h3>
         {fields.map((field, index) => (
           <div key={index}>
             <label className="text-lg">{field.label}</label>
@@ -48,15 +40,14 @@ const CreateUserModal = ({
           </div>
         ))}
         <button
-          disabled={isValidCreateUser}
           onClick={handleSave}
           className="btn btn-primary w-fit self-end mt-4"
         >
-          Criar
+          Criar Local
         </button>
       </div>
     </Modal>
   );
 };
 
-export default CreateUserModal;
+export default CreatePlaceModal;

@@ -1,11 +1,11 @@
-import UsersTable from "./UsersTable";
-import EditUserModal from "./EditUserModal/EditUserModal";
 import { useEffect } from "react";
-import CreateUserModal from "./CreateUserModal/CreateUserModal";
-import useAPI from "../../hooks/useAPI";
+import useUserAPI from "../../hooks/useUserAPI";
 import PageWrapper from "../../components/PageWrapper";
 import useUserList from "./useUserList";
-import UserListHeader from "./UserListHeader";
+import UserListHeader from "./components/UserListHeader";
+import CreateUserModal from "./components/CreateUserModal/CreateUserModal";
+import EditUserModal from "./components/EditUserModal/EditUserModal";
+import UsersTable from "./components/UsersTable";
 
 export interface User {
   id: string;
@@ -14,13 +14,19 @@ export interface User {
   level: number;
   profile_img: string;
 }
-
 export type UserWithBadge = User & { badge_url: string };
-
 export type NewUser = Omit<User, "id">;
 
+/**
+ * Page to list all the users in the application.
+ * it includes all the components to create,
+ * edit and delete places. It also includes a
+ * button to download the users list as a PDF,
+ * besides that it includes a button to acess
+ * the badges of each user.
+ */
 const UserList = () => {
-  const { getUsersPDF } = useAPI();
+  const { getUsersPDF } = useUserAPI();
 
   const {
     apiData,

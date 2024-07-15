@@ -1,7 +1,7 @@
-import Modal from "../../../components/Modal";
-import SelectProfileImage from "../../../components/SelectProfileImage";
-import TextField from "../../../components/TextField";
-import { User } from "../UserList";
+import Modal from "../../../../components/Modal";
+import SelectProfileImage from "../../../../components/SelectProfileImage";
+import TextField from "../../../../components/TextField";
+import { User } from "../../UserList";
 import useEditUserModal from "./useEditUserModal";
 
 export interface SaveUserModalProps {

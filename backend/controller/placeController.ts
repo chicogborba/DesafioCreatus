@@ -10,10 +10,11 @@ export const getPlaces = async (req: Request, res: Response) => {
 
 export const createPlace = async (req: Request, res: Response) => {
   const { description, acessLevel } = req.body
+  const acessLevelNumber = parseInt(acessLevel)
   const place = await prisma.place.create({
     data: {
       description,
-      acessLevel,
+      acessLevel: acessLevelNumber,
     },
   })
   res.json(place)
@@ -31,3 +32,12 @@ export const editPlace = async (req: Request, res: Response) => {
   })
   res.json(place)
 }
+
+export const deletePlace = async (req: Request, res: Response) => {
+  const { id } = req.params
+  await prisma.place.delete({
+    where: { id: id }
+  })
+  res.json({ message: "Place deleted" })
+}
+
