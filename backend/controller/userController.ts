@@ -44,7 +44,7 @@ export const getUsers = async (req: Request, res: Response) => {
 }
 
 export const createUser = async (req: Request, res: Response) => {
-  const { name, email, password, level } = req.body;
+  const { name, email, password, level, profile_img } = req.body;
 
   // Hash da senha usando bcrypt
   const hashedPassword = await bcrypt.hash(password, 10); // 10 é o custo de hashing
@@ -52,6 +52,7 @@ export const createUser = async (req: Request, res: Response) => {
   try {
     const user = await prisma.user.create({
       data: {
+        profile_img,
         name,
         email,
         password: hashedPassword,
@@ -67,11 +68,11 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const editUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, email, password, level } = req.body;
+  const { name, email, password, level, profile_img} = req.body;
 
   try {
     // Verifica se a senha foi fornecida para alteração
-    let dataToUpdate: any = { name, email, level };
+    let dataToUpdate: any = { name, email, level, profile_img };
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10); // Hash da nova senha
       dataToUpdate.password = hashedPassword;

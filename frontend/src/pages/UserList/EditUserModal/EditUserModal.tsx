@@ -1,4 +1,5 @@
 import Modal from "../../../components/Modal";
+import SelectProfileImage from "../../../components/SelectProfileImage";
 import TextField from "../../../components/TextField";
 import { User } from "../UserList";
 import useEditUserModal from "./useEditUserModal";
@@ -14,17 +15,28 @@ const EditUserModal: React.FC<SaveUserModalProps> = ({
   onClose,
   onUserSave,
 }) => {
-  const { fields, state, handleChange, handleSave, isValidEditUser } =
-    useEditUserModal({
-      userData,
-      onUserSave,
-      onClose,
-    });
+  const {
+    fields,
+    state,
+    handleChange,
+    handleSave,
+    isValidEditUser,
+    handleFileChange,
+    imageLink,
+  } = useEditUserModal({
+    userData,
+    onUserSave,
+    onClose,
+  });
 
   return (
     <Modal isOpen={!!userData} onClose={onClose}>
-      <div className="w-full text-left flex flex-col gap-4">
+      <div className="w-full text-left flex flex-col gap-2">
         <h3 className="font-medium text-2xl">Editar Usuario</h3>
+        <SelectProfileImage
+          imageLink={imageLink}
+          handleFileChange={handleFileChange}
+        />
         {fields.map((field, index) => (
           <TextField
             placeholder={field.placeholder}

@@ -1,6 +1,7 @@
 import Modal from "../../../components/Modal";
 import { NewUser } from "../UserList";
 import useCreateUserModal from "./useCreateUserModal";
+import SelectProfileImage from "../../../components/SelectProfileImage";
 
 export interface CreateUserModalProps {
   isOpen: boolean;
@@ -13,13 +14,23 @@ const CreateUserModal = ({
   onClose,
   onCreateUser,
 }: CreateUserModalProps) => {
-  const { fields, handleChange, handleSave, isValidCreateUser } =
-    useCreateUserModal(onClose, onCreateUser, isOpen);
+  const {
+    fields,
+    handleChange,
+    handleSave,
+    isValidCreateUser,
+    handleFileChange,
+    imageLink,
+  } = useCreateUserModal(onClose, onCreateUser, isOpen);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="w-full text-left flex flex-col gap-4">
         <h3 className="font-medium text-2xl">Criar Usuario</h3>
+        <SelectProfileImage
+          imageLink={imageLink}
+          handleFileChange={handleFileChange}
+        />
         {fields.map((field, index) => (
           <div key={index}>
             <label className="text-lg">{field.label}</label>

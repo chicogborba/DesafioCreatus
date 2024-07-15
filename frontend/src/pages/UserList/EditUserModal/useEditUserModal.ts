@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { User } from "../UserList";
 import useGeneralFunctions from "../../../hooks/useGeneralFunctions";
+import useAWSAPI from "../../../hooks/useAWSAPI";
+import useImage from "../../../hooks/useImage";
 
 export type Field = {
   label: string;
@@ -29,6 +31,8 @@ const useEditUserModal = ({
   onUserSave,
 }: UseEditUserModal) => {
   const { isValidEmail } = useGeneralFunctions();
+  const { postFileToS3 } = useAWSAPI();
+  const { changeImageSize } = useImage();
 
   const fields: Field[] = [
     {
@@ -72,6 +76,7 @@ const useEditUserModal = ({
   };
 
   const [state, setState] = useState<State>(initialState);
+  const [imageLink, setImageLink] = useState<string | null>(null);
   const [isValidEditUser, setIsValidEditUser] = useState(false);
 
   useEffect(() => {
@@ -82,24 +87,29 @@ const useEditUserModal = ({
       password: "",
       confirmPassword: "",
     });
+    setImageLink(userData?.profile_img || null);
   }, [userData]);
 
   useEffect(() => {
     const isNotEmpty = state.name !== "" && state.email !== "";
     const arePasswordsEqual = state.password === state.confirmPassword;
-    const isUserDataDiferent =
+    const isUserDataDifferent =
       state.name !== userData?.name ||
       state.email !== userData?.email ||
       state.level !== userData?.level.toString() ||
       state.password !== "" ||
       state.confirmPassword !== "";
+    const isImageDifferent = imageLink !== userData?.profile_img;
+
     setIsValidEditUser(
-      !isNotEmpty ||
-        !isValidEmail(state.email) ||
-        !arePasswordsEqual ||
-        !isUserDataDiferent,
+      !(
+        isNotEmpty &&
+        isValidEmail(state.email) &&
+        arePasswordsEqual &&
+        (isUserDataDifferent || isImageDifferent)
+      ),
     );
-  }, [state]);
+  }, [state, imageLink, userData, isValidEmail]);
 
   const handleChange = (key: keyof State, value: string) => {
     setState((prev) => ({ ...prev, [key]: value }));
@@ -112,12 +122,33 @@ const useEditUserModal = ({
       name: state.name,
       email: state.email,
       level: parseInt(state.level),
+      profile_img: imageLink || "",
     };
     onUserSave(user);
     onClose();
   };
 
-  return { fields, state, handleChange, handleSave, isValidEditUser };
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const newFile = await changeImageSize(file, 330, 330);
+      if (newFile) {
+        postFileToS3(newFile).then((link) => {
+          setImageLink(link || null);
+        });
+      }
+    }
+  };
+
+  return {
+    fields,
+    state,
+    handleChange,
+    handleSave,
+    isValidEditUser,
+    imageLink,
+    handleFileChange,
+  };
 };
 
 export default useEditUserModal;

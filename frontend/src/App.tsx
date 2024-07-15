@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import UserList from "./pages/UserList/UserList";
-import UserCreate from "./pages/UserCreate";
 import useAuth from "./hooks/useAuth";
+import PlaceList from "./pages/PlacesList/PlaceList";
 
 const App = () => {
   const { isLoggedIn, login, setIsLoggedIn } = useAuth();
@@ -26,16 +26,20 @@ const App = () => {
           <Route
             path="/"
             element={
-              isLoggedIn ? <Navigate to="/list" /> : <LoginPage login={login} />
+              isLoggedIn ? (
+                <Navigate to="/user-list" />
+              ) : (
+                <LoginPage login={login} />
+              )
             }
           />
           <Route
-            path="/list"
+            path="/user-list"
             element={isLoggedIn ? <UserList /> : <Navigate to="/" />}
           />
           <Route
-            path="/createUser"
-            element={isLoggedIn ? <UserCreate /> : <Navigate to="/" />}
+            path="/place-list"
+            element={isLoggedIn ? <PlaceList /> : <Navigate to="/" />}
           />
         </Routes>
       </div>

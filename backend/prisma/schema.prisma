@@ -10,6 +10,7 @@ generator client {
 
 model User {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  profile_img String
   email   String   @unique
   name    String?
   level   Int 
