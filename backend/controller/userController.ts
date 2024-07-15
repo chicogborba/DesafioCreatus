@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { postBadgeImg } from "../services/awsService";
 
 const prisma = new PrismaClient()
 
@@ -59,7 +60,13 @@ export const createUser = async (req: Request, res: Response) => {
         level
       },
     });
-  
+    const badge = await postBadgeImg(profile_img, name, user.id);
+    await prisma.badge.create({
+      data: {
+        badge_url: badge,
+        user_id: user.id
+      }
+    });
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: 'Erro ao criar usuário.' });

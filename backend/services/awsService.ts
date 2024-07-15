@@ -1,6 +1,8 @@
 import aws from 'aws-sdk';
 import { randomBytes } from "crypto";
 import dotenv from 'dotenv';
+import { createBadge } from "./badgeService";
+import axios from "axios";
 
 dotenv.config();
 
@@ -28,4 +30,21 @@ export async function generateUploadURL () {
 
   const uploadURL = s3.getSignedUrlPromise('putObject', params);
   return uploadURL;
+}
+
+export async function postBadgeImg(profileImgUrl: string, badgeName: string, id: string | number) {
+  // Cria o badge e obtém o buffer da imagem
+  const badgeBuffer = await createBadge(profileImgUrl, badgeName, id);
+
+  // Gera a URL de upload para o S3
+  const url = await generateUploadURL();
+
+  // Envia o buffer da imagem para o S3 usando a URL de upload
+  await axios.put(url, badgeBuffer, {
+    headers: {
+      'Content-Type': 'image/png',
+    },
+  });
+
+  return url.split('?')[0];
 }

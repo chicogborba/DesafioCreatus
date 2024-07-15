@@ -21,4 +21,21 @@ model Place {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   description    String
   acessLevel    Int
+  accessHistories AccessHistory[]
+}
+
+model AccessHistory {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  userName    String
+  userLevel   Int
+  entryDate   DateTime @default(now())
+  placeId     String   @db.ObjectId
+  userId      String   @db.ObjectId
+  place       Place    @relation(fields: [placeId], references: [id])
+}
+
+model Badge {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  user_id String @db.ObjectId
+  badge_url String
 }
