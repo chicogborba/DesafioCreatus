@@ -33,6 +33,14 @@ const AllowAcess = () => {
   }, []);
 
   useEffect(() => {
+    if (selectedPlace) {
+      setUser(null);
+      setAcessStatus("Análise");
+      setScanID("");
+    }
+  }, [selectedPlace]);
+
+  useEffect(() => {
     const fetchData = async () => {
       if (scanID) {
         const data = await getUserById(scanID);
@@ -79,44 +87,46 @@ const AllowAcess = () => {
           </select>
         </div>
       </div>
-      <div className="mx-10 mt-8 flex flex-row h-full gap-8">
-        <div className="flex flex-col text-center w-fit gap-8">
-          <div className="w-full h-full max-w-96 max-h-96 rounded-2xl overflow-hidden">
-            <Scanner
-              formats={["qr_code"]}
-              scanDelay={500}
-              allowMultiple
-              onScan={(result) => setScanID(result[0].rawValue)}
-            />
+      <div className="flex flex-row justify-center w-full">
+        <div className="w-fit mx-10 mt-8 flex flex-row h-full gap-8">
+          <div className="flex flex-col text-center w-fit gap-8">
+            <div className="w-full h-full max-w-96 max-h-96 rounded-2xl overflow-hidden">
+              <Scanner
+                formats={["qr_code"]}
+                scanDelay={500}
+                allowMultiple
+                onScan={(result) => setScanID(result[0].rawValue)}
+              />
+            </div>
+            <h1
+              className={
+                ` p-2 rounded-lg font-bold text-2xl
+              text-white ` + acessColors[acessStatus]
+              }
+            >
+              {acessStatus}
+            </h1>
           </div>
-          <h1
-            className={
-              ` p-2 rounded-lg font-bold text-2xl
-             text-white ` + acessColors[acessStatus]
-            }
-          >
-            {acessStatus}
-          </h1>
-        </div>
-        <div className="rounded-full border-2 border-gray-100 h-4/5" />
-        <div className="flex flex-col items-center gap-4">
-          <img
-            className="w-full h-full max-w-80 max-h-80 rounded-3xl"
-            src={user?.profile_img ? user?.profile_img : defaultUserImage}
-            alt="Default User"
-          />
-          <h4 className="text-3xl">
-            <span className="font-bold">Nome:</span>{" "}
-            {user?.name || "xxxxxxxxxxxx"}
-          </h4>
-          <h4 className="text-xl">
-            <span className="font-bold">Email:</span>{" "}
-            {user?.email || "xxxxxxxxxxxx"}
-          </h4>
-          <h4 className="text-xl">
-            <span className="font-bold">Nível:</span>{" "}
-            {user?.level || "xxxxxxxxxxxx"}
-          </h4>
+          <div className="rounded-full border-2 border-gray-100 h-4/5" />
+          <div className="flex flex-col items-center gap-4">
+            <img
+              className="w-full h-full max-w-80 max-h-80 rounded-3xl"
+              src={user?.profile_img ? user?.profile_img : defaultUserImage}
+              alt="Default User"
+            />
+            <h4 className="text-3xl">
+              <span className="font-bold">Nome:</span>{" "}
+              {user?.name || "xxxxxxxxxxxx"}
+            </h4>
+            <h4 className="text-xl">
+              <span className="font-bold">Email:</span>{" "}
+              {user?.email || "xxxxxxxxxxxx"}
+            </h4>
+            <h4 className="text-xl">
+              <span className="font-bold">Nível:</span>{" "}
+              {user?.level || "xxxxxxxxxxxx"}
+            </h4>
+          </div>
         </div>
       </div>
     </PageWrapper>

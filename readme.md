@@ -27,7 +27,7 @@ FRONTEND
 
 BACKEND
 - npm i
-- npx prisma generate
+- npx prisma generate --schema ./src/prisma/schema.prisma
 - npx ts-node src/index.ts
 
 PS: Sei que é altamente recomendável não deixar dados sensíveis como os do arquivo .env expostos no GitHub. No entanto, como estou usando várias chaves para serviços externos como AWS, MongoDB, etc., para garantir que o programa funcione, coloquei o arquivo .env criptografado dentro da pasta src em um um arquivo dotenv.txt. Use o site Invertexto(https://www.invertexto.com/texto-criptografado) com a senha "boloruim" para pegar os dados da .env original. Embora não seja a solução mais segura, é uma alternativa melhor do que deixar as informações em texto claro. Pretendo remover esses dados assim que o processo seletivo for concluído.
