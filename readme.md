@@ -23,6 +23,7 @@ Esta página permite visualizar todos os usuários da plataforma e gerar relató
 
 ![Listagem de Usuários](screenshots/UserListPage.png)
 ![Modal do Usuário](screenshots/UserModal.png)
+![Badge do Usuário](screenshots/UserBadge.png)
 
 ### 2. Listagem de Locais
 
