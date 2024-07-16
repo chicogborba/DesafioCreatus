@@ -74,7 +74,7 @@ Usa a webcam para ler o QR Code do crachá em tempo real e verificar o acesso do
 
 ## 🔐 Dados Sensíveis
 
-Para garantir que o programa funcione, o arquivo `.env` foi criptografado e colocado na pasta `src` como `dotenv.txt`. Use o site [Invertexto](https://www.invertexto.com/texto-criptografado) com a senha "boloruim" para acessar os dados da `.env` original. Pretendo remover esses dados após o processo seletivo.
+Para garantir que o programa funcione, o arquivo `.env` foi criptografado e salvo como `dotenv.txt`. Use o site [Invertexto](https://www.invertexto.com/texto-criptografado) com a senha "boloruim" para acessar os dados da `.env` original. Pretendo remover esses dados após o processo seletivo visto que se tratam de dados sens.
 
 ## 📞 Contato
 
