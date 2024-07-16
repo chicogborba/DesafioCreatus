@@ -1,5 +1,6 @@
+# SafeCo™ - Guarita Inteligente
 
-** EXPLICAÇÃO *** 
+## 📜 Sobre o Projeto
 
 Bom, em primeiro lugar, gostaria de agradecer pelo tempo dedicado à análise deste desafio e a análise da minha candidatura neste processo seletivo. Dito isso, acabei me empolgando com a ideia do projeto e adicionei bem mais do que a proposta inicial. Algumas das features que incluí levaram à construção de um backend próprio, e todas essas ideias surgiram da base do desafio de backend e frontend.
 
@@ -7,29 +8,78 @@ Dito isso, vamos começar pelas motivações por trás dessas adições. Conside
 
 Infelizmente, como o prazo para finalizar o projeto era de apenas uma semana, reduzi o escopo para tentar atender ao menos a um modelo de MVP capaz de realizar as funções de uma guarita inteligente. Para isso, criei várias páginas, que vou explicar a seguir:
 
-1) *Listagem de Usuários*
-Essa página já estava desenvolvida no Figma base do desafio proposto, mas foi turbinada com várias novidades. Agora, ela gera um relatório PDF com a relação de todos os usuários da plataforma, incluindo seus e-mails e níveis de acesso. Além disso, foram adicionadas fotos de perfil para todos os usuários, que são usadas na criação dinâmica de crachás. Esses crachás incluem a foto do usuário, nome, e um QR Code com o ID do mesmo. Essa funcionalidade será mais relevante nos próximos itens. As fotos são armazenadas em um S3 da AWS pelo frontend a partir de um link seguro gerado pelo backend.
+## 🚀 Funcionalidades
 
-2) *Listagem de Locais*
-Funciona de maneira semelhante à listagem de usuários, permitindo a criação e edição de novos locais. Cada local possui uma descrição e um nível de acesso necessário para entrada.
+### 0. Tela de login
 
-3) *Validar Acesso*
-Esta página permite que o usuário selecione um dos locais listados na página anterior e, a partir disso, utiliza a webcam do computador para ler o QR Code do usuário em tempo real, determinando se ele tem ou não acesso ao local. Além disso, a foto, nome e e-mail do usuário são mostrados na tela para evitar possíveis falhas de segurança relacionadas a furtos de crachás. (A ideia final era usar a função de Face Similarity da biblioteca face-api.js para realizar um reconhecimento facial, comparando o rosto visto pela câmera com o salvo no sistema, mas infelizmente não deu tempo)
-
-Acredito que essas são as principais adições em relação ao desafio base. Mesmo que de forma básica, elas permitem criar alguns casos de uso que nos dão uma boa ideia do funcionamento real do sistema.
+Uma tela de login simples, que utiliza atenticação JWT para acessar as páginas internas.
+Além disso foi feita uma animação com as ondas do design original
+![Tela de Login](screenshots/loginScreen.gif)
 
 
-** COMO RODAR *** 
+### 1. Listagem de Usuários
 
-FRONTEND
- - npm i
- - npm run dev 
+Esta página permite visualizar todos os usuários da plataforma e gerar relatórios PDF com suas informações, incluindo e-mails e níveis de acesso. Fotos de perfil são usadas para criar crachás dinâmicos com QR Codes.
 
-BACKEND
-- npm i
-- npx prisma generate
-- npx ts-node src/index.ts
+![Listagem de Usuários](screenshots/UserListPage.png)
+![Modal do Usuário](screenshots/UserModal.png)
 
-PS: Sei que é altamente recomendável não deixar dados sensíveis como os do arquivo .env expostos no GitHub. No entanto, como estou usando várias chaves para serviços externos como AWS, MongoDB, etc., para garantir que o programa funcione, coloquei o arquivo .env criptografado dentro da pasta src em um um arquivo dotenv.txt. Use o site Invertexto(https://www.invertexto.com/texto-criptografado) com a senha "boloruim" para pegar os dados da .env original. Embora não seja a solução mais segura, é uma alternativa melhor do que deixar as informações em texto claro. Pretendo remover esses dados assim que o processo seletivo for concluído.
+### 2. Listagem de Locais
+
+Permite a criação e edição de locais, com descrição e nível de acesso necessário para entrada.
+
+![Listagem de Locais](screenshots/UserListPage.png)
+![Modal do Local](screenshots/PlaceModal.png)
+
+
+
+### 3. Validar Acesso
+
+Usa a webcam para ler o QR Code do crachá em tempo real e verificar o acesso do usuário ao local selecionado. Mostra a foto, nome e e-mail do usuário para evitar fraudes.
+
+![Validar Acesso](screenshots/AcessPage.png)
+![Negando Acesso](screenshots/dontAllow.png)
+
+## 🛠️ Como Rodar
+
+### Frontend
+
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+2. Execute o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+### Backend
+
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+
+2. Gere o cliente Prisma:
+   ```bash
+   npx prisma generate
+   ```
+
+3. Inicie o servidor:
+   ```bash
+   npx ts-node index.ts
+   ```
+
+## 🔐 Dados Sensíveis
+
+Para garantir que o programa funcione, o arquivo `.env` foi criptografado e colocado na pasta `src` como `dotenv.txt`. Use o site [Invertexto](https://www.invertexto.com/texto-criptografado) com a senha "boloruim" para acessar os dados da `.env` original. Pretendo remover esses dados após o processo seletivo.
+
+## 📞 Contato
 
 Se precisar de mais alguma coisa, basta me chamar no WhatsApp.
+
+## 📝 Informações de login inicial
+
+email: demo@creatus.com
+senha: Creatus
